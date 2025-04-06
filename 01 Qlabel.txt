@@ -2,7 +2,7 @@
 
 # Importação
 from PyQt6.QtWidgets import *  # Importa tudo
-from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra,image,video
 import sys
 
 # Classe principal
