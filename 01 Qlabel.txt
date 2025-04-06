@@ -1,0 +1,42 @@
+# QLabel Example
+
+# Importação
+from PyQt6.QtWidgets import *  # Importa tudo
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+import sys
+
+# Classe principal
+class MyWindow(QWidget):
+    def __init__(self):  # Método construtor
+        super().__init__()
+        self.setWindowTitle("02-QLabel")  # Título da janela
+        self.setMinimumHeight(80)  # Altura mínima
+        self.setMinimumWidth(250)  # Largura mínima
+
+        # Criação de um QLabel com video
+        label = QLabel(self)  # Criação de um QLabel
+        movie = QMovie("video.gif")  # Criação de um QMovie com o video a ser exibido
+        label.setMovie(movie)  # Adiciona o video ao QLabel
+        movie.setSpeed(100)  # Velocidade do video
+        movie.start()  # Inicia o video
+
+
+
+
+        
+        '''label = QLabel(self)
+        pixmap = QPixmap("img.png")  # Imagem a ser exibida adiciona o caminho
+        label.setPixmap(pixmap) # Adiciona a imagem ao QLabel
+        label = QLabel(self)  # Criação de um QLabel
+        label = QLabel(self) # 
+        label.setText("Hello World!!")#
+        label.move(100,20) # tamanho do tela 
+        label.setFont(QFont("Sanserif",20)) # fonte da letra
+        label.setStyleSheet('color: red') # cor da letra
+        label.clear()'''
+
+
+app =QApplication(sys.argv)  # Criação da aplicação
+window = MyWindow()  # Criação da janela    
+window.show()  # Exibição da janela
+sys.exit(app.exec())  # Execução da aplicação
