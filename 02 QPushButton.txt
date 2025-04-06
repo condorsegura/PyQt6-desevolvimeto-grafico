@@ -1,0 +1,30 @@
+# Importação
+from PyQt6.QtWidgets import *  # Importa tudo
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+from PyQt6.QtCore import QSize # Tamanho do icone
+import sys
+
+# Classe principal
+class MyWindow(QWidget):
+    def __init__(self):  # Método construtor
+        super().__init__()
+        self.setGeometry(150,150, 400,250)  #  janela
+        self.setWindowTitle('Meu primeiro botao')  # nome do botao
+        self.create_button()  # criado o botao
+
+        # metodo contruto do butao
+    def create_button(self):
+         btn = QPushButton("Clique aqui",self)
+         btn.setGeometry(10,10,100,50) #localização do botao e tamanho 
+         btn.setFont(QFont("Timesf",9, QFont.Weight.Bold)) # fonte do botao
+         btn.setStyleSheet('background-color: black; color:blue') # cor do botao e letra
+         #btn.setIcon(QIcon("img.png")) # icone do botao
+         btn.setIconSize(QSize(20,20))
+
+
+
+
+app =QApplication(sys.argv)  # Criação da aplicação
+window = MyWindow()  # Criação da janela    
+window.show()  # Exibição da janela
+sys.exit(app.exec())  # Execução da aplicação
