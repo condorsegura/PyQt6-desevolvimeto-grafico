@@ -1,0 +1,40 @@
+# Importação
+from PyQt6.QtWidgets import *  # Importa tudo
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+from PyQt6.QtCore import QSize # Tamanho do icone
+import sys
+
+# Classe principal
+class MyWindow(QWidget):
+    def __init__(self):  # Método construtor
+        super().__init__()
+        self.setGeometry(150,150, 400,250)  #  janela
+        self.setWindowTitle("boxLayout")  # titulo nome 
+        self.criar_widgets()  # funçao 
+
+        # metodo contruto do butao
+    def criar_widgets(self):
+         hbox = QHBoxLayout() # horizontal
+
+         btn1 = QPushButton("Entrar")  # Botão 1
+         line_edit = QLineEdit() # Caixa de texto 1
+         line_edit.setPlaceholderText("Digite se Email") # Texto de espaço reservado
+
+         line_edit2 = QLineEdit() # Caixa de texto 2
+         line_edit2.setPlaceholderText("Digite sua senha") # Texto de espaço reservado
+         line_edit2.setEchoMode(QLineEdit.EchoMode.Password) # Modo de exibição de senha
+         line_edit2.setMaxLength(10)
+
+         # se vc altera as orde de de adição dos widgets, altera a ordem de exibição na tela
+         hbox.addWidget(btn1)   # Adiciona o botão ao layout
+         hbox.addWidget(line_edit)  # Adiciona a caixa de texto ao layout
+         hbox.addWidget(line_edit2)  # Adiciona a caixa de texto ao layout
+         
+
+
+         self.setLayout(hbox)
+
+app =QApplication(sys.argv)  # Criação da aplicação
+window = MyWindow()  # Criação da janela    
+window.show()  # Exibição da janela
+sys.exit(app.exec())  # Execução da aplicação
