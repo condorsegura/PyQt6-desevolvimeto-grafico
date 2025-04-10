@@ -1,0 +1,71 @@
+# documentaçao do topico
+
+https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtwidgets/qradiobutton.html#QRadioButton
+
+#######################################################################
+
+#codigo 
+
+# Importação
+
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLineEdit # Importa os módulos necessários da biblioteca PyQt6
+from PyQt6.QtWidgets import *  # Importa tudo
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+from PyQt6.QtCore import QSize # Tamanho do icone
+import sys
+
+# Classe principal
+class MyWindow(QWidget):
+    def __init__(self):  # Método construtor
+        super().__init__()
+        self.setGeometry(10,100, 400,250)  #  janela
+        self.setWindowTitle("RadioButton")  # titulo nome 
+        self.criar_widgets()  # funçao 
+
+        # metodo contruto do butao baixa as imagem pra porde adiciona na tela
+    def criar_widgets(self):
+         
+         rad1 = QRadioButton("WahatsApp")  # Botão 1
+         # rad1.setIcon(QIcon("whatsapp.png"))  # Define o ícone do botão 1   
+         # rad1.setIconSize(QSize(50,50))  # Define o tamanho do ícone do botão
+
+         rad2 = QRadioButton("Instagram")  # Botão 2
+         # rad2.setIcon(QIcon("instagram.png"))   # Define o ícone do botão 2
+         # rad2.setIconSize(QSize(50,50))  # Define o tamanho do ícone do botão 2
+         
+         rad3 = QRadioButton("FaceBook")  # Botão 3
+         # rad3.setIcon(QIcon("facebook.png")) # Define o ícone do botão 3     
+         # rad3.setIconSize(QSize(50,50))  # Define o tamanho do ícone do botão 3
+         
+         label = QLabel("Escolha sua rede social favorita")  # lebal 1
+
+
+        # funçao para conecta
+         rad1.toggled.connect(self.radio_button_selected)  # Conecta o sinal de mudança de estado do botão 1 ao método radio_button_selected
+         rad2.toggled.connect(self.radio_button_selected)  # Conecta o sinal de mudança de estado do botão 2 ao método radio_button_selected        
+         rad3.toggled.connect(self.radio_button_selected)  # Conecta o sinal de mudança de estado do botão 3 ao método radio_button_selected 
+     
+
+         vbox = QVBoxLayout() # Criação do layout vertical
+         vbox.addWidget(label) # Adiciona o label ao layout
+         vbox.addWidget(rad1) # Adiciona o botão 1 ao layout
+         vbox.addWidget(rad2) # Adiciona o botão 2 ao layout
+         vbox.addWidget(rad3) # Adiciona o botão 3 ao layout
+
+
+    def radio_button_selected(self):  # Método chamado quando um botão de rádio é selecionado
+         radio_selected = self.sender()  # Obtém o botão de rádio que enviou o sinal
+         if radio_selected.isChecked():  # Verifica se o botão de rádio está selecionado
+             self.label.setText(f"Você escolheu: {radio_selected.text()}")  
+             # Altera o texto do label para mostrar qual botão foi selecionado  
+
+         
+
+   
+        
+                 
+
+app =QApplication(sys.argv)  # Criação da aplicação
+window = MyWindow()  # Criação da janela    
+window.show()  # Exibição da janela
+sys.exit(app.exec())  # Execução da aplicação
