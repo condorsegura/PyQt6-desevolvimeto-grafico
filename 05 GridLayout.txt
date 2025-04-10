@@ -1,0 +1,57 @@
+# blibioteca
+https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtwidgets/qgridlayout.html
+
+########################################################################################
+# codigo 
+
+# Importação
+
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLineEdit # Importa os módulos necessários da biblioteca PyQt6
+from PyQt6.QtWidgets import *  # Importa tudo
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+from PyQt6.QtCore import QSize # Tamanho do icone
+import sys
+
+# Classe principal
+class MyWindow(QWidget):
+    def __init__(self):  # Método construtor
+        super().__init__()
+        self.setGeometry(150,150, 400,250)  #  janela
+        self.setWindowTitle("Grid Layout")  # titulo nome 
+        self.criar_widgets()  # funçao 
+
+        # metodo contruto do butao
+    def criar_widgets(self):
+         
+         
+         btn1 = QPushButton("muda o texto")  # Botão 1
+         btn1.clicked.connect(self.cliked_btn)  # Conecta o botão 1 ao método cliked_btn
+         
+         btn2 = QPushButton("Volta o texto")  # Botão 1
+         btn2.clicked.connect(self.cliked_btn2)
+        
+         self.texto = "texto de origem"  # Texto de origem
+         self.label = QLabel(self.texto)   # Criação do label
+         
+    
+         # ordenando o os botões
+         grid = QGridLayout()  # Criação do layout em grade
+         grid.addWidget(btn1, 0, 0) # Adiciona o botão 1 na posição (0, 0)          
+         grid.addWidget(btn2, 0, 1) # Adiciona o botão 2 na posição (0, 1)
+         grid.addWidget(self.label, 0, 3) # Adiciona o label na posição (1, 0)
+         self.setLayout(grid) # Define o layout da janela como o grid criado
+
+
+    def cliked_btn(self):
+        self.label.setText("Texto alterado")  # Método para alterar o texto do label
+
+    def cliked_btn2(self):
+        self.label.setText("Texto de volta a origem")  # Método para alterar o texto do label
+        
+        
+                 
+
+app =QApplication(sys.argv)  # Criação da aplicação
+window = MyWindow()  # Criação da janela    
+window.show()  # Exibição da janela
+sys.exit(app.exec())  # Execução da aplicação
