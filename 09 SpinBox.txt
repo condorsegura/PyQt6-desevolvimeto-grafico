@@ -1,0 +1,50 @@
+# documentaçao 
+https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtwidgets/qspinbox.html#QSpinBox
+
+############################################################################
+# codigo 
+
+# Importação
+
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLineEdit # Importa os módulos necessários da biblioteca PyQt6
+from PyQt6.QtWidgets import *  # Importa tudo
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+from PyQt6.QtCore import QSize # Tamanho do icone
+import sys
+
+# Classe principal
+class MyWindow(QWidget):
+    def __init__(self):  # Método construtor
+        super().__init__()
+        self.setGeometry(10,100, 400,250)  #  janela
+        self.setWindowTitle("CheckBox")  # titulo nome 
+        self.criar_widgets()  # funçao 
+
+    def criar_widgets(self):   
+        self.spin= QSpinBox(self,value=2,minimum=1,maximum=10) # Cria um QSpinBox com valor inicial 2, mínimo 1 e máximo 10
+        
+        self.spin.valueChanged.connect(self.spin_value)  # Conecta o sinal valueChanged do QSpinBox ao método spin_value
+
+        
+        self.label_musarela = QLabel("Piza de Musarela")  # Cria um QLabel com o texto "Pizza de Musarela"
+        self.label_total = QLabel("Total = R$00,00")  # Cria um QLabel com o texto "Total = R$00,00"
+
+        grid = QGridLayout()
+        grid.addWidget(self.spin,0,1)  # Adiciona o QSpinBox na posição (0,0) da grade
+        grid.addWidget(self.label_musarela,0,0)
+        grid.addWidget(self.label_total,0,2) # Adiciona o QLabel na posição (0,1) da grade      
+        self.setLayout(grid)
+        # Criação do botão
+
+    def spin_value(self): # Método para atualizar o valor do QSpinBox
+        self.label_total.setText(f"Total = R${50 * int(self.spin.text()),00}") # Atualiza o texto do QLabel com o valor total
+
+
+
+
+
+
+app =QApplication(sys.argv)  # Criação da aplicação
+window = MyWindow()  # Criação da janela    
+window.show()  # Exibição da janela
+sys.exit(app.exec())  # Execução da aplicação
