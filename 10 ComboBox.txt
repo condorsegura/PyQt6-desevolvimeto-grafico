@@ -1,0 +1,48 @@
+# documentaçao 
+https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtwidgets/qcombobox.html
+
+#####################################################################################
+# codigo
+
+# Importação
+
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLineEdit # Importa os módulos necessários da biblioteca PyQt6
+from PyQt6.QtWidgets import *  # Importa tudo
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+from PyQt6.QtCore import QSize # Tamanho do icone
+import sys
+
+# Classe principal
+class MyWindow(QWidget):
+    def __init__(self):  # Método construtor
+        super().__init__()
+        self.setGeometry(10,100, 400,250)  #  janela
+        self.setWindowTitle("CheckBox")  # titulo nome 
+        self.criar_widgets()  # funçao 
+
+    def criar_widgets(self):   
+        self.combo = QComboBox() # Criação do combo box
+        self.combo.addItem("Sabores") # Adiciona item ao combo box
+
+        sabores = ["calabresa", "portuguesa", "marguerita"] # Lista de sabores
+        self.combo.addItems(sabores) # Adiciona os sabores ao combo box
+        self.combo.currentIndexChanged.connect(self.combo_select) # Conecta o sinal de mudança do índice atual do combo box ao método combo_select
+
+        self.label1 = QLabel("Escolha o sabor") # Criação do label
+
+
+        hbox = QHBoxLayout()    # Criação do layout horizontal
+        hbox.addWidget(self.label1) # Adiciona o label ao layout
+        hbox.addWidget(self.combo) # Adiciona o label e o combo box ao layout
+        self.setLayout(hbox) # Define o layout da janela
+
+    def combo_select(self): # Método para selecionar o item do combo box
+        self.label1.setText(f' o sabo selecionado foi :{self.combo.currentText()}') # Atualiza o texto do label com o item selecionado
+
+
+
+
+app =QApplication(sys.argv)  # Criação da aplicação
+window = MyWindow()  # Criação da janela    
+window.show()  # Exibição da janela
+sys.exit(app.exec())  # Execução da aplicação
