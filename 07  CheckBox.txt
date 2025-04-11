@@ -1,0 +1,78 @@
+# documentaçao desse atributo 
+https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtwidgets/qcheckbox.html#QCheckBox
+
+#############################################################################
+# codigo 
+
+# Importação
+
+from PyQt6.QtWidgets import QApplication, QWidget, QHBoxLayout, QPushButton, QLineEdit # Importa os módulos necessários da biblioteca PyQt6
+from PyQt6.QtWidgets import *  # Importa tudo
+from PyQt6.QtGui import QFont,QPixmap,QMovie # Fonte estilo de letra
+from PyQt6.QtCore import QSize # Tamanho do icone
+import sys
+
+# Classe principal
+class MyWindow(QWidget):
+    def __init__(self):  # Método construtor
+        super().__init__()
+        self.setGeometry(10,100, 400,250)  #  janela
+        self.setWindowTitle("CheckBox")  # titulo nome 
+        self.criar_widgets()  # funçao 
+
+        # metodo contruto do butao baixa as imagem pra porde adiciona na tela
+    def criar_widgets(self):
+         self.check1 = QCheckBox("WahatsApp")  # Botão 1 
+         self.check1.setFont(QFont("Sanserif", 10))  # Define a fonte do botão 1
+         self.check1.toggled.connect(self.item_selected)  # Conecta o sinal toggled do botão 1 ao método item_selected
+         
+
+         self.check2 = QCheckBox("Instagram")  # Botão 1 
+         self.check2.setFont(QFont("Sanserif", 10))  # Define a fonte do botão 1
+         self.check2.toggled.connect(self.item_selected)  # Conecta o sinal toggled do botão 1 ao método item_selected
+         
+         self.check3 = QCheckBox("Fecebook")  # Botão 1 
+         self.check3.setFont(QFont("Sanserif", 10))  # Define a fonte do botão 1
+         self.check3.toggled.connect(self.item_selected)  # Conecta o sinal toggled do botão 1 ao método item_selected
+
+
+         self.label = QLabel("Escolha suas rede social favoritas")  # Cria um rótulo (label) com o texto "Selecione o aplicativo
+         self.label.setFont(QFont("Sanserif", 16))  # Define a fonte do rótulo
+
+
+         vbox = QVBoxLayout()   # Criação do layout vertical    
+         vbox.addWidget(self.check1)  # Adiciona o botão 1 ao layout
+         vbox.addWidget(self.check2)  # Adiciona o botão 2 ao layout
+         vbox.addWidget(self.check3)  # Adiciona o botão 3 ao layout
+         vbox.addWidget(self.label)  # Adiciona o rótulo ao layout
+         
+         self.setLayout(vbox)   # Define o layout da janela como o layout vertical criado acima
+
+
+
+    def item_selected(self):    # Método para verificar qual botão foi selecionado
+        texto01 = ""    # Variável para armazenar o texto do botão selecionado
+        texto02 = ""    # Variável para armazenar o texto do botão selecionado
+        texto03 = ""    # Variável para armazenar o texto do botão selecionado
+        if self.check1.isChecked():    # Verifica se o botão 1 está selecionado
+            texto01 = self.check1.text()    # Armazena o texto do botão 1 na variável texto01
+        if self.check2.isChecked():    # Verifica se o botão 2 está selecionado
+            texto02 = self.check2.text()
+            # Armazena o texto do botão 2 na variável texto02
+        if self.check3.isChecked():    # Verifica se o botão 3 está selecionado
+            texto03 = self.check3.text()    # Armazena o texto do botão 3 na variável texto03
+        # Atualiza o texto do rótulo com os textos dos botões selecionados  
+        texto =  " " + texto01 + " " + texto02 + " " + texto03
+        
+        self.label.setText("escolha sua rede social" + texto )  # Atualiza o texto do rótulo com os textos dos botões selecionados
+
+
+
+
+
+
+
+app =QApplication(sys.argv)  # Criação da aplicação
+window = MyWindow()  # Criação da janela    
+window.show()  # Exibição da janela
+sys.exit(app.exec())  # Execução da aplicação
