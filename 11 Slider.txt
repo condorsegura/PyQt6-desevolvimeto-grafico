@@ -1,0 +1,50 @@
+documentaçao 
+https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QAbstractSlider.html#PySide6.QtWidgets.QAbstractSlider.isSliderDown
+#########################################################
+
+codigo
+
+from PyQt6.QtWidgets import QApplication, QWidget, QSlider, QHBoxLayout, QLabel
+from PyQt6.QtCore import Qt # Corrigido o método
+
+import sys
+
+class MyWindow(QWidget):  # Corrigido o nome da classe
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("13_slider")  # Corrigido o método
+        self.create_widgets()
+
+    def create_widgets(self):
+        # Adicione widgets aqui, se necessário
+        self.slider = QSlider() # Corrigido o método
+        self.slider.setOrientation(Qt.Orientation.Horizontal) # Corrigido o método
+        self.slider.setTickPosition(QSlider.TickPosition.TicksBelow) # Corrigido o método
+        self.slider.setTickInterval(10) # Corrigido o método
+        self.slider.setMinimum(10) 
+        self.slider.setMaximum(80)
+        self.slider.valueChanged.connect(self.slider_values) 
+
+        self.label = QLabel("0") 
+
+
+        
+
+
+        hbox = QHBoxLayout() # Corrigido o método
+        hbox.addWidget(self.slider)  # Corrigido o método
+        hbox.addWidget(self.label) 
+        self.setLayout(hbox)
+        # Adicione mais widgets ou layouts conforme necessário
+
+
+    def slider_values(self):
+        # Aqui você pode adicionar o código para lidar com os valores do slider
+        self.label.setText(str(self.slider.value()))  # Corrigido o método
+
+
+
+app = QApplication(sys.argv)
+window = MyWindow()  # Corrigido o nome da classe
+window.show()
+sys.exit(app.exec())
