@@ -1,0 +1,54 @@
+ducumentaçao 
+https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QCalendarWidget.html#PySide6.QtWidgets.QCalendarWidget
+
+##############################################################################################
+codigo
+
+from PyQt6.QtWidgets import QApplication, QWidget, QVBoxLayout, QCalendarWidget, QLabel
+import sys
+
+class CalendarApp(QWidget):
+    """
+    Classe principal da aplicação que exibe um calendário.
+    """
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Calendário")  # Define o título da janela
+        self.setGeometry(100, 100, 400, 300)  # Define o tamanho da janela
+        self.create_widgets()  # Cria os widgets
+
+    def create_widgets(self):
+        """
+        Método responsável por criar e organizar os widgets.
+        """
+        # Layout principal
+        layout = QVBoxLayout()
+
+        # Cria o widget de calendário
+        self.calendar = QCalendarWidget()
+        self.calendar.setGridVisible(True)  # Exibe a grade no calendário
+        self.calendar.clicked.connect(self.show_date)  # Conecta o clique no calendário ao método show_date
+
+        # Cria um rótulo para exibir a data selecionada
+        self.label = QLabel("Data selecionada: Nenhuma")
+        self.label.setStyleSheet("font-size: 16px;")  # Define o estilo do texto
+
+        # Adiciona os widgets ao layout
+        layout.addWidget(self.calendar)
+        layout.addWidget(self.label)
+
+        # Define o layout na janela
+        self.setLayout(layout)
+
+    def show_date(self, date):
+        """
+        Método chamado quando uma data é clicada no calendário.
+        Atualiza o rótulo com a data selecionada.
+        """
+        self.label.setText(f"Data selecionada: {date.toString('dd/MM/yyyy')}")
+
+# Inicializa a aplicação
+app = QApplication(sys.argv)
+window = CalendarApp()
+window.show()
+sys.exit(app.exec())

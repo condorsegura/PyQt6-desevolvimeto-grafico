@@ -1,0 +1,48 @@
+DOCUMENTAÇAO 
+https://doc.qt.io/qtforpython-6/gettingstarted.html#
+
+#############################################################################################
+CODIGO
+
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import Qt # Corrigido o método
+import sys
+
+class MyWindow(QWidget):  # Corrigido o nome da classe
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("14_list")  # Corrigido o método
+        self.create_widgets()
+
+    def create_widgets(self): 
+        self.list = QListWidget()
+        self.list.addItems(["Mussarela"])
+        self.list.addItems(["Calabresa"])
+        self.list.addItems(["Alho"])
+        self.list.addItems(["Presunto"])
+        self.list.clicked.connect(self.label_text)
+
+
+        self.label = QLabel("Pizza sabor:")
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(self.list)
+        vbox.addWidget(self.label)
+        self.setLayout(vbox)
+
+    def label_text(self):
+        sabor = self.list.currentItem()
+        self.label.setText(f'PIzza Sabor:  {sabor.text()}')  # Corrigido o método
+
+
+
+
+
+
+
+
+
+app = QApplication(sys.argv)
+window = MyWindow()  # Corrigido o nome da classe
+window.show()
+sys.exit(app.exec())

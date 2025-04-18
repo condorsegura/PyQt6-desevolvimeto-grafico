@@ -1,0 +1,305 @@
+documentaçao 
+https://doc.qt.io/qtforpython-6/PySide6/QtWidgets/QDialog.html#PySide6.QtWidgets.QDialog
+
+#########################################################################################
+
+codigo
+
+Explicação:
+Exemplo 1:
+
+Um diálogo simples com um rótulo e um botão para fechar.
+Usa QDialog.exec() para exibir o diálogo de forma modal.
+Exemplo 2:
+
+Um diálogo que permite ao usuário inserir texto e retorna o valor para a janela principal.
+Usa accept() para fechar o diálogo com sucesso e get_input() para recuperar o texto inserido.
+Esses exemplos mostram como usar QDialog para criar janelas de diálogo simples e interativas.
+ Se precisar de mais exemplos ou funcionalidades, é só avisar!
+
+#########################################################################################
+codigo 1
+
+from PyQt6.QtWidgets import QApplication, QDialog, QVBoxLayout, QLabel, QPushButton
+import sys
+
+class SimpleDialog(QDialog):
+    """
+    Classe que representa um diálogo simples.
+    """
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Diálogo Simples")  # Define o título do diálogo
+        self.setGeometry(100, 100, 300, 150)  # Define o tamanho do diálogo
+        self.create_widgets()
+
+    def create_widgets(self):
+        """
+        Cria os widgets do diálogo.
+        """
+        layout = QVBoxLayout()  # Layout vertical para organizar os widgets
+
+        # Rótulo com uma mensagem
+        label = QLabel("Este é um diálogo simples.")
+        layout.addWidget(label)
+
+        # Botão para fechar o diálogo
+        close_button = QPushButton("Fechar")
+        close_button.clicked.connect(self.close)  # Conecta o clique ao método close
+        layout.addWidget(close_button)
+
+        self.setLayout(layout)  # Define o layout no diálogo
+
+# Inicializa a aplicação
+app = QApplication(sys.argv)
+dialog = SimpleDialog()
+dialog.exec()  # Exibe o diálogo de forma modal
+
+
+#############################################################################################
+codigo 2
+
+from PyQt6.QtWidgets import QApplication, QDialog, QVBoxLayout, QLabel, QLineEdit, QPushButton, QMainWindow
+import sys
+
+class InputDialog(QDialog):
+    """
+    Diálogo que permite ao usuário inserir texto.
+    """
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Diálogo de Entrada")
+        self.setGeometry(100, 100, 300, 150)
+        self.create_widgets()
+
+    def create_widgets(self):
+        """
+        Cria os widgets do diálogo.
+        """
+        layout = QVBoxLayout()
+
+        # Rótulo e campo de entrada
+        self.label = QLabel("Digite algo:")
+        self.input_field = QLineEdit()
+        layout.addWidget(self.label)
+        layout.addWidget(self.input_field)
+
+        # Botão para confirmar
+        confirm_button = QPushButton("Confirmar")
+        confirm_button.clicked.connect(self.accept)  # Fecha o diálogo com sucesso
+        layout.addWidget(confirm_button)
+
+        self.setLayout(layout)
+
+    def get_input(self):
+        """
+        Retorna o texto inserido no campo de entrada.
+        """
+        return self.input_field.text()
+
+class MainWindow(QMainWindow):
+    """
+    Janela principal que exibe o diálogo.
+    """
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Janela Principal")
+        self.setGeometry(100, 100, 400, 200)
+        self.create_widgets()
+
+    def create_widgets(self):
+        """
+        Cria os widgets da janela principal.
+        """
+        self.label = QLabel("Texto retornado: Nenhum", self)
+        self.label.setGeometry(50, 50, 300, 30)
+
+        open_dialog_button = QPushButton("Abrir Diálogo", self)
+        open_dialog_button.setGeometry(50, 100, 150, 30)
+        open_dialog_button.clicked.connect(self.open_dialog)
+
+    def open_dialog(self):
+        """
+        Abre o diálogo e atualiza o rótulo com o texto retornado.
+        """
+        dialog = InputDialog()
+        if dialog.exec():  # Exibe o diálogo e verifica se foi aceito
+            text = dialog.get_input()
+            self.label.setText(f"Texto retornado: {text}")
+
+# Inicializa a aplicação
+app = QApplication(sys.argv)
+window = MainWindow()
+window.show()
+sys.exit(app.exec())
+
+###############################################################################################
+codigo 3
+
+O que foi adicionado:
+Botão "Selecionar Fonte":
+
+Usa QFontDialog.getFont() para abrir o seletor de fontes.
+Aplica a fonte selecionada ao rótulo (self.label).
+Botão "Selecionar Cor":
+
+Usa QColorDialog.getColor() para abrir o seletor de cores.
+Aplica a cor selecionada ao rótulo usando setStyleSheet.
+Estilo inicial do rótulo:
+
+O rótulo começa com uma fonte padrão e cor preta.
+Como funciona:
+Clique no botão "Abrir Diálogo" na janela principal.
+No diálogo, clique em "Selecionar Fonte" para escolher uma fonte e aplicá-la ao texto.
+Clique em "Selecionar Cor" para escolher uma cor e aplicá-la ao texto.
+Clique em "Confirmar" para fechar o diálogo.
+Agora você pode personalizar o texto com a fonte e cor de sua escolha! Se precisar de mais ajustes, é só avisar.
+
+##############################################################################################
+
+
+from PyQt6.QtWidgets import (
+    QApplication, QDialog, QVBoxLayout, QLabel, QPushButton, QFontDialog, QColorDialog, QMainWindow
+)
+from PyQt6.QtGui import QColor
+import sys
+
+class InputDialog(QDialog):
+    """
+    Diálogo que permite ao usuário selecionar fonte e cor.
+    """
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Diálogo de Fonte e Cor")
+        self.setGeometry(100, 100, 400, 200)
+        self.create_widgets()
+
+    def create_widgets(self):
+        """
+        Cria os widgets do diálogo.
+        """
+        layout = QVBoxLayout()
+
+        # Rótulo para exibir texto com fonte e cor selecionadas
+        self.label = QLabel("Texto de exemplo")
+        self.label.setStyleSheet("font-size: 16px; color: black;")  # Estilo inicial
+        layout.addWidget(self.label)
+
+        # Botão para selecionar fonte
+        font_button = QPushButton("Selecionar Fonte")
+        font_button.clicked.connect(self.select_font)
+        layout.addWidget(font_button)
+
+        # Botão para selecionar cor
+        color_button = QPushButton("Selecionar Cor")
+        color_button.clicked.connect(self.select_color)
+        layout.addWidget(color_button)
+
+        # Botão para confirmar
+        confirm_button = QPushButton("Confirmar")
+        confirm_button.clicked.connect(self.accept)  # Fecha o diálogo com sucesso
+        layout.addWidget(confirm_button)
+
+        self.setLayout(layout)
+
+    def select_font(self):
+        """
+        Abre o diálogo de seleção de fonte e aplica a fonte selecionada ao rótulo.
+        """
+        font, ok = QFontDialog.getFont()  # Abre o seletor de fontes
+        if ok:  # Se o usuário confirmar a seleção
+            self.label.setFont(font)
+
+    def select_color(self):
+        """
+        Abre o diálogo de seleção de cor e aplica a cor selecionada ao rótulo.
+        """
+        color = QColorDialog.getColor()  # Abre o seletor de cores
+        if color.isValid():  # Se o usuário selecionar uma cor válida
+            self.label.setStyleSheet(f"color: {color.name()};")
+
+class MainWindow(QMainWindow):
+    """
+    Janela principal que exibe o diálogo.
+    """
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Janela Principal")
+        self.setGeometry(100, 100, 400, 200)
+        self.create_widgets()
+
+    def create_widgets(self):
+        """
+        Cria os widgets da janela principal.
+        """
+        self.label = QLabel("Texto retornado: Nenhum", self)
+        self.label.setGeometry(50, 50, 300, 30)
+
+        open_dialog_button = QPushButton("Abrir Diálogo", self)
+        open_dialog_button.setGeometry(50, 100, 150, 30)
+        open_dialog_button.clicked.connect(self.open_dialog)
+
+    def open_dialog(self):
+        """
+        Abre o diálogo e atualiza o rótulo com o texto retornado.
+        """
+        dialog = InputDialog()
+        if dialog.exec():  # Exibe o diálogo e verifica se foi aceito
+            self.label.setText("Texto atualizado com fonte e cor!")
+
+# Inicializa a aplicação
+app = QApplication(sys.argv)
+window = MainWindow()
+window.show()
+sys.exit(app.exec())
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
