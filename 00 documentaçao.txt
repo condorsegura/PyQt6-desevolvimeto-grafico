@@ -1,0 +1,8 @@
+https://www.riverbankcomputing.com/static/Docs/PyQt6/api/qtwidgets/qtwidgets-module.html
+
+########################################################################################
+https://www.pythonguis.com/tutorials/pyqt6-first-steps-qt-designer/
+
+#######################################################################################
+instalado 
+https://build-system.fman.io/qt-designer-download
