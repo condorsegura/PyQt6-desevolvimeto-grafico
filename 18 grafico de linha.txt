@@ -1,0 +1,74 @@
+codigo 
+
+#########################################################################################
+
+
+
+
+from PyQt5.QtWidgets import QApplication, QVBoxLayout, QWidget, QPushButton
+import sys
+import pyqtgraph as pg
+import random
+import numpy as np
+
+class Line_Graph(QWidget):
+    def __init__(self):
+        super().__init__()
+        
+        # Cria um layout vertical
+        vbox = QVBoxLayout()
+        
+        # Cria um widget de plotagem (substitui QWidget pelo widget de plotagem real)
+        self.plt = pg.PlotWidget()  # Widget de plotagem do PyQtGraph
+        self.plt.addLegend()  # Adiciona uma legenda ao gráfico
+
+        # Configurações do gráfico
+        self.plt.setBackground('w')  # Define o fundo do gráfico como branco
+        self.plt.setTitle("Line Graph Example")  # Define o título do gráfico
+        self.plt.showGrid(x=True, y=True)  # Exibe as linhas de grade no gráfico
+        self.plt.setLabel('left', 'Y-axis Label')  # Define o rótulo do eixo Y
+        self.plt.setLabel('bottom', 'X-axis Label')  # Define o rótulo do eixo X
+        self.plt.setXRange(0, 10)  # Define o intervalo do eixo X
+        self.plt.setYRange(0, 100)  # Define o intervalo do eixo Y
+
+        # Dados para o gráfico
+        y = [1, 2, 3, 4, 25, 28, 44, 96, 78, 100]  # Valores do eixo Y para a primeira linha
+        y2 = [10, 20, 30, 40, 30, 70, 89, 55, 74, 100]  # Valores do eixo Y para a segunda linha
+        x = range(10)  # Valores do eixo X (0 a 9)
+
+        # Plota as linhas no gráfico
+        self.plt.plot(x, y)  # Plota a primeira linha
+        self.plt.plot(x, y2, pen='r', symbol='o', symbolPen='g')  # Plota a segunda linha em vermelho com símbolos verdes
+        self.plt.plot(x, y, pen='d', symbol='o', symbolPen='b', filllevel=5, brush=(255, 255, 255, 50))  # Plota a primeira linha novamente com preenchimento azul
+
+        # Cria um botão para alterar os valores do gráfico
+        btn = QPushButton("Altera valor", clicked=self.altera_valor)
+
+        # Adiciona o botão e o gráfico ao layout
+        vbox.addWidget(btn)  # Adiciona o botão ao layout
+        vbox.addWidget(self.plt)  # Adiciona o gráfico ao layout
+        self.setLayout(vbox)  # Define o layout para o widget principal
+
+    def altera_valor(self): 
+        # Limpa o gráfico atual
+        self.plt.clear()
+
+        # Dados para o gráfico
+        y = [1, 2, 3, 4, 25, 28, 44, 96, 78, 100]  # Valores fixos para a primeira linha
+        y2 = []  # Lista para armazenar valores aleatórios para a segunda linha
+        y2.append(random.randint(0, 100))  # Adiciona um valor aleatório inicial
+        for i in range(1, 10):  # Gera mais 9 valores aleatórios
+            y2.append(random.randint(0, 100))
+        x = range(10)  # Valores do eixo X (0 a 9)
+
+        # Plota as linhas no gráfico novamente
+        self.plt.plot(x, y)  # Plota a primeira linha
+        self.plt.plot(x, y2, pen='r', symbol='o', symbolPen='g')  # Plota a segunda linha em vermelho com símbolos verdes
+        self.plt.plot(x, y, pen='d', symbol='o', symbolPen='b', filllevel=5, brush=(255, 255, 255, 50))  # Plota a primeira linha novamente com preenchimento azul
+
+
+# Lógica principal da aplicação
+app = QApplication(sys.argv)  # Cria a aplicação PyQt
+window = Line_Graph()  # Cria uma instância da classe Line_Graph
+window.show()  # Exibe a janela principal
+sys.exit(app.exec())  # Executa o loop principal da aplicação

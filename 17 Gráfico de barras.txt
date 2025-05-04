@@ -1,0 +1,40 @@
+codigo 
+
+import sys # Importa o módulo sys para manipulação de argumentos da linha de comando
+import pyqtgraph as pg # Importa a biblioteca pyqtgraph 
+from PyQt6.QtWidgets import  * # Importa os widgets do PyQt6
+
+
+class Bar_Graph(QWidget): 
+    def __init__(self):
+        super().__init__()  
+        self.setWindowTitle("Bar Graph") # Define o título da janela
+        
+        vbox = QVBoxLayout() # Cria um layout vertical 
+        
+        plot = pg.plot() # Cria um gráfico
+
+        y = [1, 2, 3, 4, 5] # Define os valores do eixo y
+        x = range(len(y)) # Define os valores do eixo x
+
+        xdict = {0: 'janeiro', 1: 'fevereiro', 2: 'março', 3: 'abril', 4: 'maio'} # Dicionário para os rótulos do eixo x
+        axis = pg.AxisItem(orientation='bottom') # Cria um item de eixo
+        axis.setTicks([xdict.items()]) # Define os rótulos do eixo x
+        plot.setAxisItems({'bottom': axis}) # Define o item de eixo do gráfico
+        
+        bar = pg.BarGraphItem(x=x, height=y, width=0.6, brush=(0,255,0,255)) # Cria um item de gráfico de barras 
+        
+        plot.addItem(bar) # Adiciona o item de gráfico de barras ao gráfico
+        vbox.addWidget(plot) # Adiciona o gráfico ao layout vertical
+        self.setLayout(vbox) # Define o layout da janela 
+
+        
+
+
+
+
+
+app = QApplication(sys.argv)    # Cria uma instância da classe QApplication
+window = Bar_Graph()   # Cria uma instância da classe Bar_Graph
+window.show()         # Exibe a janela
+sys.exit(app.exec())   # Inicia o loop de eventos da aplicação

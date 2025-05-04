@@ -1,0 +1,103 @@
+import sys
+from PyQt6.QtWidgets import (
+    QApplication, QWidget, QVBoxLayout, QHBoxLayout,
+    QLabel, QLineEdit, QPushButton, QDoubleSpinBox,
+    QFormLayout, QMessageBox # Importar QMessageBox para mensagens de erro
+)
+from PyQt6.QtCore import Qt # Para alinhamento
+
+class JanelaCadastroClientes(QWidget):
+    def __init__(self):
+        super().__init__()
+
+        # --- Variáveis para armazenar os dados ---
+        self.quantidade_clientes = 0
+        self.valor_total_clientes = 0.0
+
+        # --- Configuração inicial da janela ---
+        self.setWindowTitle("Cadastro de Clientes - Tempo Real")
+        self.setGeometry(200, 200, 450, 250) # x, y, largura, altura
+
+        # --- Criar os Widgets ---
+
+        # Layout principal
+        self.layout_principal = QVBoxLayout(self) # Layout vertical para toda a janela
+
+        # -- Seção de Entrada de Dados (usando QFormLayout para clareza) --
+        self.layout_form = QFormLayout()
+
+        self.label_nome = QLabel("Nome Cliente:")
+        self.input_nome = QLineEdit()
+        self.layout_form.addRow(self.label_nome, self.input_nome)
+
+        self.label_valor = QLabel("Valor (R$):")
+        self.input_valor = QDoubleSpinBox() # Melhor para números, evita erros de digitação
+        self.input_valor.setDecimals(2)     # Duas casas decimais
+        self.input_valor.setMinimum(0.0)    # Valor mínimo é 0
+        self.input_valor.setMaximum(1000000.0) # Define um máximo se necessário
+        self.input_valor.setPrefix("R$ ")   # Adiciona prefixo visual
+        self.layout_form.addRow(self.label_valor, self.input_valor)
+
+        self.layout_principal.addLayout(self.layout_form) # Adiciona o form ao layout principal
+
+        # -- Botão de Cadastro --
+        self.botao_cadastrar = QPushButton("Cadastrar Cliente")
+        self.botao_cadastrar.clicked.connect(self.cadastrar_novo_cliente) # Conecta o clique à função
+        self.layout_principal.addWidget(self.botao_cadastrar)
+
+        # -- Seção de Exibição dos Totais --
+        self.label_quantidade = QLabel(f"Clientes Cadastrados: {self.quantidade_clientes}")
+        self.label_quantidade.setStyleSheet("font-weight: bold; font-size: 14px;") # Estilo
+        self.label_quantidade.setAlignment(Qt.AlignmentFlag.AlignCenter) # Centraliza o texto
+
+        self.label_valor_total = QLabel(f"Valor Total Acumulado: R$ {self.valor_total_clientes:.2f}")
+        self.label_valor_total.setStyleSheet("font-weight: bold; font-size: 14px; color: green;") # Estilo
+        self.label_valor_total.setAlignment(Qt.AlignmentFlag.AlignCenter) # Centraliza
+
+        self.layout_principal.addStretch(1) # Adiciona espaço flexível antes dos labels
+        self.layout_principal.addWidget(self.label_quantidade)
+        self.layout_principal.addWidget(self.label_valor_total)
+        self.layout_principal.addStretch(1) # Adiciona espaço flexível depois dos labels
+
+        # Define o layout principal para a janela
+        self.setLayout(self.layout_principal)
+
+    def cadastrar_novo_cliente(self):
+        """
+        Função chamada quando o botão 'Cadastrar Cliente' é clicado.
+        Lê os dados, valida, atualiza os totais e os labels de exibição.
+        """
+        nome_cliente = self.input_nome.text().strip() # Pega o texto e remove espaços extras
+        valor_cliente = self.input_valor.value()      # Pega o valor numérico do SpinBox
+
+        # --- Validação Simples ---
+        if not nome_cliente:
+            QMessageBox.warning(self, "Erro de Entrada", "Por favor, insira o nome do cliente.")
+            return # Para a execução da função se o nome estiver vazio
+
+        # (O QDoubleSpinBox já ajuda a validar o número, mas você pode adicionar mais checagens se necessário)
+
+        # --- Atualiza os Dados Internos ---
+        self.quantidade_clientes += 1
+        self.valor_total_clientes += valor_cliente
+
+        # --- Atualiza os Labels de Exibição (aqui acontece o "tempo real") ---
+        self.label_quantidade.setText(f"Clientes Cadastrados: {self.quantidade_clientes}")
+        self.label_valor_total.setText(f"Valor Total Acumulado: R$ {self.valor_total_clientes:.2f}")
+
+        # --- Limpa os campos de entrada para o próximo cadastro ---
+        self.input_nome.clear()
+        self.input_valor.setValue(0.0) # Reseta o valor do SpinBox para 0
+
+        # --- Opcional: Dar foco ao campo nome novamente ---
+        self.input_nome.setFocus()
+
+        print(f"Cliente '{nome_cliente}' cadastrado com valor R$ {valor_cliente:.2f}.") # Feedback no console
+
+
+# --- Bloco Principal de Execução ---
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    janela = JanelaCadastroClientes()
+    janela.show()
+    sys.exit(app.exec())
